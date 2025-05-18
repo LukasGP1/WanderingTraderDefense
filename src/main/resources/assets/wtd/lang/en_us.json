@@ -2,6 +2,8 @@
   "itemgroup.wtd.wandy_t_defense": "Wandy T Defense",
 
   "item.wtd.mogswamp_spawn_egg": "Mogswamp Spawn Egg",
+  "item.wtd.mogswamp_archer_spawn_egg": "Mogswamp Archer Spawn Egg",
 
-  "entity.wtd.mogswamp": "Mogswamp"
+  "entity.wtd.mogswamp": "Mogswamp",
+  "entity.wtd.mogswamp_archer": "Mogswamp Archer"
 }

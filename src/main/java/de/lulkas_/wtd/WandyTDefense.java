@@ -1,6 +1,7 @@
 package de.lulkas_.wtd;
 
 import de.lulkas_.wtd.entity.ModEntities;
+import de.lulkas_.wtd.entity.custom.MogswampArcherEntity;
 import de.lulkas_.wtd.entity.custom.MogswampEntity;
 import de.lulkas_.wtd.event.ModEvents;
 import de.lulkas_.wtd.item.ModItemGroups;
@@ -21,6 +22,7 @@ public class WandyTDefense implements ModInitializer {
 		ModItemGroups.registerModItemGroups();
 		ModEntities.registerModEntities();
 		FabricDefaultAttributeRegistry.register(ModEntities.MOGSWAMP, MogswampEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.MOGSWAMP_ARCHER, MogswampArcherEntity.createAttributes());
 		ModEvents.registerModEvents();
 	}
 }

@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -24,15 +26,15 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 public class MogswampEntity extends HostileEntity {
-    private static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(MogswampEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(MogswampEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
+    protected int idleAnimationTimeout = 0;
     public final AnimationState attackingAnimationState = new AnimationState();
     public int attackingAnimationTimeout = 0;
-    private WanderingTraderEntity trader;
-    private UUID traderUUID;
-    private MogswampFollowTraderGoal followTraderGoal;
-    private final String traderUUIDDataName = "TraderUUID";
+    protected WanderingTraderEntity trader;
+    protected UUID traderUUID;
+    protected MogswampFollowTraderGoal followTraderGoal;
+    protected final String traderUUIDDataName = "TraderUUID";
 
     public MogswampEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -54,11 +56,11 @@ public class MogswampEntity extends HostileEntity {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 200)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.8)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 50);
     }
 
-    private void setupAnimationStates() {
+    protected void setupAnimationStates() {
         if(this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 30;
             this.idleAnimationState.start(this.age);
@@ -98,6 +100,14 @@ public class MogswampEntity extends HostileEntity {
     }
 
     @Override
+    public boolean damage(DamageSource source, float amount) {
+        if(source.isOf(DamageTypes.ARROW)) {
+            return false;
+        }
+        return super.damage(source, amount);
+    }
+
+    @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
         builder.add(ATTACKING, false);
@@ -106,7 +116,9 @@ public class MogswampEntity extends HostileEntity {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putUuid(traderUUIDDataName, traderUUID);
+        if(traderUUID != null) {
+            nbt.putUuid(traderUUIDDataName, traderUUID);
+        }
     }
 
     @Override

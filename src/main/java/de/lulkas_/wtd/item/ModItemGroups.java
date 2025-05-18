@@ -17,6 +17,7 @@ public class ModItemGroups {
                     .displayName(Text.translatable("itemgroup.wtd.wandy_t_defense"))
                     .entries((displayContext, entries) -> {
                         entries.add(ModItems.MOGSWAMP_SPAWN_EGG);
+                        entries.add(ModItems.MOGSWAMP_ARCHER_SPAWN_EGG);
                     }).build()
     );
 

@@ -1,6 +1,7 @@
 package de.lulkas_.wtd.entity;
 
 import de.lulkas_.wtd.WandyTDefense;
+import de.lulkas_.wtd.entity.custom.MogswampArcherEntity;
 import de.lulkas_.wtd.entity.custom.MogswampEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -12,6 +13,11 @@ public class ModEntities {
     public static final EntityType<MogswampEntity> MOGSWAMP = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(WandyTDefense.MOD_ID, "mogswamp"),
             EntityType.Builder.create(MogswampEntity::new, SpawnGroup.CREATURE).dimensions(1f, 1.95f).build()
+    );
+
+    public static final EntityType<MogswampArcherEntity> MOGSWAMP_ARCHER = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(WandyTDefense.MOD_ID, "mogswamp_archer"),
+            EntityType.Builder.create(MogswampArcherEntity::new, SpawnGroup.CREATURE).dimensions(1f, 1.95f).build()
     );
 
     public static void registerModEntities() {

@@ -1,24 +1,33 @@
-package de.lulkas_.wtd.entity.client;
+package de.lulkas_.wtd.entity.client.model;
 
 import de.lulkas_.wtd.WandyTDefense;
+import de.lulkas_.wtd.entity.client.anim.MogswampAnimations;
+import de.lulkas_.wtd.entity.client.renderer.ModelWithGetRightArm;
 import de.lulkas_.wtd.entity.custom.MogswampEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.ModelWithArms;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
-public class MogswampModel<T extends MogswampEntity> extends SinglePartEntityModel<T> {
+public class MogswampModel<T extends MogswampEntity> extends SinglePartEntityModel<T> implements ModelWithArms, ModelWithGetRightArm {
     public static final EntityModelLayer MOGSWAMP = new EntityModelLayer(Identifier.of(WandyTDefense.MOD_ID, "mogswamp"), "main");
+    public static final EntityModelLayer MOGSWAMP_ARCHER = new EntityModelLayer(Identifier.of(WandyTDefense.MOD_ID, "mogswamp_archer"), "main");
 
     private final ModelPart mogswamp;
     private final ModelPart head;
+    private final ModelPart leftArm;
+    private final ModelPart rightArm;
 
     public MogswampModel(ModelPart root) {
         this.mogswamp = root.getChild("mogswamp");
         this.head = this.mogswamp.getChild("head");
+        this.leftArm = this.mogswamp.getChild("leftarm");
+        this.rightArm = this.mogswamp.getChild("rightarm");
     }
 
     public static TexturedModelData getTexturedModelData() {
@@ -45,12 +54,12 @@ public class MogswampModel<T extends MogswampEntity> extends SinglePartEntityMod
         this.getPart().traverse().forEach(ModelPart::resetTransform);
         this.setHeadAngles(netHeadYaw, headPitch);
 
-        this.animateMovement(MogswampAnimations.ANIM_MOGSWAMP_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-        this.updateAnimation(entity.idleAnimationState, MogswampAnimations.ANIM_MOGSWAMP_IDLE, ageInTicks, 1f);
-        this.updateAnimation(entity.attackingAnimationState, MogswampAnimations.ANIM_MOGSWAMP_ATTACK, ageInTicks, 1f);
+        this.animateMovement(MogswampAnimations.WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+        this.updateAnimation(entity.idleAnimationState, MogswampAnimations.IDLE, ageInTicks, 1f);
+        this.updateAnimation(entity.attackingAnimationState, MogswampAnimations.ATTACK, ageInTicks, 1f);
     }
 
-    private void setHeadAngles(float headYaw, float headPitch) {
+    protected void setHeadAngles(float headYaw, float headPitch) {
         headYaw = MathHelper.clamp(headYaw, -30.0f, 30.0f);
         headPitch = MathHelper.clamp(headPitch, -25.0f, 45.0f);
 
@@ -66,5 +75,19 @@ public class MogswampModel<T extends MogswampEntity> extends SinglePartEntityMod
     @Override
     public ModelPart getPart() {
         return mogswamp;
+    }
+
+    @Override
+    public void setArmAngle(Arm arm, MatrixStack matrices) {
+        this.getArm(arm).rotate(matrices);
+    }
+
+    protected ModelPart getArm(Arm arm) {
+        return arm == Arm.LEFT ? this.leftArm : this.rightArm;
+    }
+
+    @Override
+    public ModelPart getRightArm() {
+        return this.rightArm;
     }
 }

@@ -1,8 +1,10 @@
 package de.lulkas_.wtd;
 
 import de.lulkas_.wtd.entity.ModEntities;
-import de.lulkas_.wtd.entity.client.MogswampModel;
-import de.lulkas_.wtd.entity.client.MogswampRenderer;
+import de.lulkas_.wtd.entity.client.model.MogswampArcherModel;
+import de.lulkas_.wtd.entity.client.renderer.MogswampArcherRenderer;
+import de.lulkas_.wtd.entity.client.model.MogswampModel;
+import de.lulkas_.wtd.entity.client.renderer.MogswampRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,5 +17,8 @@ public class WandyTDefenseClient implements ClientModInitializer {
     public void onInitializeClient() {
         EntityModelLayerRegistry.registerModelLayer(MogswampModel.MOGSWAMP, MogswampModel::getTexturedModelData);
         EntityRendererRegistry.register(ModEntities.MOGSWAMP, MogswampRenderer::new);
+
+        EntityModelLayerRegistry.registerModelLayer(MogswampArcherModel.MOGSWAMP_ARCHER, MogswampArcherModel::getTexturedModelData);
+        EntityRendererRegistry.register(ModEntities.MOGSWAMP_ARCHER, MogswampArcherRenderer::new);
     }
 }

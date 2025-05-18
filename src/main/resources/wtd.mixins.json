@@ -5,7 +5,8 @@
 	"mixins": [
 		"ModEntityDataSaverMixin",
 		"RespawnMixin",
-		"ServerWorldMixin"
+		"ServerWorldMixin",
+		"WanderingTraderImmuneToArrowMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

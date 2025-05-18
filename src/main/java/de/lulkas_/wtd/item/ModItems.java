@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 
 public class ModItems {
     public static final Item MOGSWAMP_SPAWN_EGG = registerItem("mogswamp_spawn_egg", new SpawnEggItem(ModEntities.MOGSWAMP, 0x9dc783, 0xbfaf5f, new Item.Settings()));
+    public static final Item MOGSWAMP_ARCHER_SPAWN_EGG = registerItem("mogswamp_archer_spawn_egg", new SpawnEggItem(ModEntities.MOGSWAMP_ARCHER, 0x9dc783, 0xbfaf5f, new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(WandyTDefense.MOD_ID, name), item);
